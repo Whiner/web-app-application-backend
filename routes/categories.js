@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
         if (err) {
             res.sendStatus(500)
         } else {
-            res.send({ applications: applications })
+            res.send(applications)
         }
     })
 });

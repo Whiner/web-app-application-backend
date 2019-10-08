@@ -11,6 +11,7 @@ const categoriesRoutes = require('./routes/categories');
 const config = require('./config/config');
 
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const app = express();
 
@@ -19,6 +20,7 @@ mongoose.Promise = global.Promise;
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors());
 app.use(sassMiddleware({
     src: path.join(__dirname, 'public'),
     dest: path.join(__dirname, 'public'),
