@@ -5,8 +5,9 @@ const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
 const bodyParser = require('body-parser');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const applicationRoutes = require( './routes/applications');
+const categoriesRoutes = require('./routes/categories');
+
 const config = require('./config/config');
 
 const mongoose = require('mongoose');
@@ -27,8 +28,8 @@ app.use(sassMiddleware({
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/app', applicationRoutes);
+app.use('/category', categoriesRoutes);
 
 module.exports = app;
 
