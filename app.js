@@ -27,7 +27,7 @@ app.use(sassMiddleware({
     indentedSyntax: true, // true = .sass and false = .scss
     sourceMap: true,
 }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '2mb'}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/app', applicationRoutes);
