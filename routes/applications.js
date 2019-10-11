@@ -14,7 +14,6 @@ router.get('/', (req, res) => {
                 applications[i] = applications[i].toObject();
                 applications[i].icon = utils.getByteArray('icons/' + applications[i].icon);
             }
-            // console.log(applications);
             res.send(applications);
         }
     });
@@ -27,7 +26,7 @@ router.post('/add', (req, res) => {
         utils.writeImage(new Uint8Array(application.icon), iconName);
     } catch (e) {
         res.status(500).send({
-            message: e.message
+            message: e.message,
         });
     }
     AppModel.create({
@@ -35,7 +34,51 @@ router.post('/add', (req, res) => {
         description: application.description,
         url: application.url,
         icon: iconName,
-        category: application.category
+        category: application.category,
+    }, (err) => {
+        if (err) {
+            console.warn(err.message);
+            res.sendStatus(500);
+        } else {
+            res.sendStatus(200);
+        }
+    });
+});
+
+
+router.post('/edit', (req, res) => {
+    const application = req.body;
+    const iconName = application.name.replace(/\s/, '_') + '.png';
+    try {
+        utils.writeImage(new Uint8Array(application.icon), iconName);
+    } catch (e) {
+        res.status(500).send({
+            message: e.message,
+        });
+    }
+    AppModel.updateOne(
+        {
+            _id: application.id,
+        },
+        {
+            name: application.name,
+            description: application.description,
+            url: application.url,
+            icon: iconName,
+            category: application.category,
+        }, (err) => {
+            if (err) {
+                console.warn(err.message);
+                res.sendStatus(500);
+            } else {
+                res.sendStatus(200);
+            }
+        });
+});
+
+router.post('/delete', (req, res) => {
+    AppModel.deleteOne({
+        _id: req.body.id,
     }, (err) => {
         if (err) {
             console.warn(err.message);
