@@ -19,13 +19,12 @@ class Utils {
     }
 
     async getSequenceValue(sequenceName) {
-        CountersModel.findOneAndUpdate(
+        const query = await CountersModel.findOneAndUpdate(
             { id: sequenceName },
             { $inc: { value: 1 } },
             { new: true }
-        ).then((v) => {
-            return v.value;
-        });
+        ).exec();
+        return query.value;
     }
 
 }

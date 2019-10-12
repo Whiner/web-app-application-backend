@@ -14,10 +14,10 @@ router.get('/', (req, res) => {
 });
 
 
-router.post('/add', (req, res) => {
+router.post('/add', async (req, res) => {
     AppCategoryModel.create({
         text: req.body.name,
-        value: utils.getSequenceValue('categoryValue')
+        value: await utils.getSequenceValue('categoryValue')
     }, (err) => {
         if (err) {
             console.warn(err.message);
