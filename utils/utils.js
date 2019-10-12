@@ -27,6 +27,9 @@ class Utils {
         return query.value;
     }
 
+    deleteIcon(name) {
+        fs.unlink('./icons/' + name, err => console.warn('Icon ' + name + ' was not remove'))
+    }
 }
 
 module.exports = new Utils();

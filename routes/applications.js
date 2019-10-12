@@ -76,7 +76,10 @@ router.post('/edit', (req, res) => {
         });
 });
 
-router.post('/delete', (req, res) => {
+router.post('/delete', async (req, res) => {
+    const app = AppModel.findById(req.body.id).exec();
+    const iconName = (await app).icon;
+    utils.deleteIcon(iconName);
     AppModel.deleteOne({
         _id: req.body.id,
     }, (err) => {
